@@ -1,29 +1,24 @@
-import { Html, useProgress } from "@react-three/drei";
+import React, { useRef } from "react";
+import { useGLTF } from "@react-three/drei";
 
-const CanvasLoader = () => {
-  const { progress } = useProgress();
+export default function ThreeDimensionalModel() {
+  const groupRef = useRef();
+  const { nodes, materials } = useGLTF("../public/spacestation_7/scene.gltf");
+
   return (
-    <Html
-      as="div"
-      center
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
-      }}>
-      <span className="canvas-loader"></span>
-      <p
-        style={{
-          fontSize: 14,
-          color: "#F1F1F1",
-          fontWeight: 800,
-          marginTop: 40,
-        }}>
-        {progress.toFixed(2)}%
-      </p>
-    </Html>
+    <group ref={groupRef} {...props} dispose={null}>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Curve007_1.geometry}
+        material={materials["Material.001"]}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Curve007_2.geometry}
+        material={materials["Material.002"]}
+      />
+    </group>
   );
-};
-
-export default CanvasLoader;
+}
